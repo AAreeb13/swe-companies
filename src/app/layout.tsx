@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { CompaniesProvider } from "@/context/CompaniesContext";
 
 export const metadata: Metadata = {
   title: "SWE Companies Tracker",
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        {children}
+        <CompaniesProvider>
+          {children}
+        </CompaniesProvider>
       </body>
     </html>
   );
