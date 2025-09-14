@@ -15,6 +15,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, companyI
   const { updateApplication, deleteApplication } = useCompanies();
   const [isEditing, setIsEditing] = useState(false);
   const [showBrainstorming, setShowBrainstorming] = useState(false);
+  const [showCoverLetter, setShowCoverLetter] = useState(false);
   const [formData, setFormData] = useState({
     position: application.position,
     status: application.status,
@@ -22,7 +23,8 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, companyI
     notes: application.notes,
     brainstorming: application.brainstorming,
     applicationUrl: application.applicationUrl || '',
-    priority: application.priority
+    priority: application.priority,
+    coverLetter: application.coverLetter || ''
   });
 
   const statusOptions = [
@@ -68,7 +70,8 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, companyI
       notes: formData.notes.trim(),
       brainstorming: formData.brainstorming.trim(),
       applicationUrl: formData.applicationUrl.trim() || undefined,
-      priority: formData.priority
+      priority: formData.priority,
+      coverLetter: formData.coverLetter.trim() || undefined
     });
     setIsEditing(false);
   };
@@ -154,6 +157,14 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, companyI
             rows={3}
           />
           
+          <Textarea
+            label="Cover Letter"
+            name="coverLetter"
+            value={formData.coverLetter}
+            onChange={handleChange}
+            rows={4}
+          />
+          
           <div className="flex justify-end space-x-2">
             <Button type="button" variant="secondary" size="sm" onClick={() => setIsEditing(false)}>
               Cancel
@@ -228,6 +239,26 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, companyI
           {showBrainstorming && (
             <div className="bg-purple-50 p-3 rounded-md">
               <p className="text-sm text-gray-700 whitespace-pre-wrap">{application.brainstorming}</p>
+            </div>
+          )}
+        </div>
+      )}
+      
+      {application.coverLetter && (
+        <div className="mb-3">
+          <div className="flex items-center justify-between mb-1">
+            <h6 className="font-medium text-sm text-gray-700">Cover Letter:</h6>
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={() => setShowCoverLetter(!showCoverLetter)}
+            >
+              {showCoverLetter ? 'Hide' : 'Show'}
+            </Button>
+          </div>
+          {showCoverLetter && (
+            <div className="bg-green-50 p-3 rounded-md">
+              <p className="text-sm text-gray-700 whitespace-pre-wrap">{application.coverLetter}</p>
             </div>
           )}
         </div>

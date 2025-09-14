@@ -21,7 +21,8 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({ companyId, onClose })
     notes: '',
     brainstorming: '',
     applicationUrl: '',
-    priority: 'medium' as ApplicationPriority
+    priority: 'medium' as ApplicationPriority,
+    coverLetter: ''
   });
 
   const statusOptions = [
@@ -49,7 +50,8 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({ companyId, onClose })
       notes: formData.notes.trim(),
       brainstorming: formData.brainstorming.trim(),
       applicationUrl: formData.applicationUrl.trim() || undefined,
-      priority: formData.priority
+      priority: formData.priority,
+      coverLetter: formData.coverLetter.trim() || undefined
     });
     
     onClose();
@@ -127,6 +129,15 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({ companyId, onClose })
         onChange={handleChange}
         placeholder="Ideas, questions to ask, research notes, salary expectations..."
         rows={4}
+      />
+      
+      <Textarea
+        label="Cover Letter"
+        name="coverLetter"
+        value={formData.coverLetter}
+        onChange={handleChange}
+        placeholder="Your cover letter content for this specific application..."
+        rows={6}
       />
       
       <div className="flex justify-end space-x-3">
