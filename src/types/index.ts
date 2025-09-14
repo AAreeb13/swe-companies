@@ -7,6 +7,7 @@ export interface Application {
   brainstorming: string;
   applicationUrl?: string;
   priority: 'low' | 'medium' | 'high';
+  coverLetter?: string;
 }
 
 export interface Company {
@@ -17,6 +18,7 @@ export interface Company {
   size?: string;
   industry?: string;
   notes?: string;
+  tags: string[];
   applications: Application[];
   createdAt: string;
 }

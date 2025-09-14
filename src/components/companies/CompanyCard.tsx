@@ -58,6 +58,23 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
                 </p>
               )}
             </div>
+            
+            {/* Tags Display */}
+            {company.tags && company.tags.length > 0 && (
+              <div className="mt-3">
+                <div className="flex flex-wrap gap-1">
+                  {company.tags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200"
+                      style={{ borderRadius: '0.375rem' }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
           <div className="flex space-x-2">
             <Button

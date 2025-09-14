@@ -104,7 +104,12 @@ export const CompaniesProvider: React.FC<{ children: ReactNode }> = ({ children 
     if (savedData) {
       try {
         const parsedData = JSON.parse(savedData);
-        dispatch({ type: 'SET_COMPANIES', payload: parsedData });
+        // Ensure backward compatibility by adding tags array if missing
+        const companiesWithTags = parsedData.map((company: Partial<Company>) => ({
+          ...company,
+          tags: company.tags || []
+        })) as Company[];
+        dispatch({ type: 'SET_COMPANIES', payload: companiesWithTags });
       } catch (error) {
         console.error('Error parsing saved data:', error);
       }
@@ -121,7 +126,8 @@ export const CompaniesProvider: React.FC<{ children: ReactNode }> = ({ children 
       ...companyData,
       id: generateId(),
       createdAt: new Date().toISOString(),
-      applications: []
+      applications: [],
+      tags: companyData.tags || []
     };
     dispatch({ type: 'ADD_COMPANY', payload: newCompany });
   };
