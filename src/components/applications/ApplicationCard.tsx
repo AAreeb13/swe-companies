@@ -24,7 +24,8 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, companyI
     brainstorming: application.brainstorming,
     applicationUrl: application.applicationUrl || '',
     priority: application.priority,
-    coverLetter: application.coverLetter || ''
+    coverLetter: application.coverLetter || '',
+    tagsInput: application.tags.join(', ')
   });
 
   const statusOptions = [
@@ -63,6 +64,13 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, companyI
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Parse tags from comma-separated input
+    const tags = formData.tagsInput
+      .split(',')
+      .map(tag => tag.trim())
+      .filter(tag => tag.length > 0);
+    
     updateApplication(companyId, application.id, {
       position: formData.position.trim(),
       status: formData.status,
@@ -71,7 +79,8 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, companyI
       brainstorming: formData.brainstorming.trim(),
       applicationUrl: formData.applicationUrl.trim() || undefined,
       priority: formData.priority,
-      coverLetter: formData.coverLetter.trim() || undefined
+      coverLetter: formData.coverLetter.trim() || undefined,
+      tags
     });
     setIsEditing(false);
   };
@@ -141,6 +150,15 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, companyI
             placeholder="https://company.com/jobs/123"
           />
           
+          <Input
+            label="Tags"
+            name="tagsInput"
+            value={formData.tagsInput}
+            onChange={handleChange}
+            placeholder="e.g., React, TypeScript, Remote, Senior (comma-separated)"
+            help="Enter skills, keywords, or tags for this application, separated by commas"
+          />
+          
           <Textarea
             label="Notes"
             name="notes"
@@ -203,6 +221,23 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, companyI
           {application.priority} priority
         </span>
       </div>
+      
+      {/* Tags Display */}
+      {application.tags && application.tags.length > 0 && (
+        <div className="mb-3">
+          <div className="flex flex-wrap gap-1">
+            {application.tags.map((tag, index) => (
+              <span
+                key={index}
+                className="px-2 py-1 text-xs font-medium bg-purple-100 text-purple-800 border border-purple-200"
+                style={{ borderRadius: '0.375rem' }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
       
       {application.applicationUrl && (
         <div className="mb-3">
