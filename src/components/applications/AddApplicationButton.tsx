@@ -22,7 +22,8 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({ companyId, onClose })
     brainstorming: '',
     applicationUrl: '',
     priority: 'medium' as ApplicationPriority,
-    coverLetter: ''
+    coverLetter: '',
+    tagsInput: ''
   });
 
   const statusOptions = [
@@ -43,6 +44,12 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({ companyId, onClose })
     e.preventDefault();
     if (!formData.position.trim()) return;
     
+    // Parse tags from comma-separated input
+    const tags = formData.tagsInput
+      .split(',')
+      .map(tag => tag.trim())
+      .filter(tag => tag.length > 0);
+    
     addApplication(companyId, {
       position: formData.position.trim(),
       status: formData.status,
@@ -51,7 +58,8 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({ companyId, onClose })
       brainstorming: formData.brainstorming.trim(),
       applicationUrl: formData.applicationUrl.trim() || undefined,
       priority: formData.priority,
-      coverLetter: formData.coverLetter.trim() || undefined
+      coverLetter: formData.coverLetter.trim() || undefined,
+      tags
     });
     
     onClose();
@@ -112,6 +120,15 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({ companyId, onClose })
           placeholder="https://company.com/jobs/123"
         />
       </div>
+      
+      <Input
+        label="Tags"
+        name="tagsInput"
+        value={formData.tagsInput}
+        onChange={handleChange}
+        placeholder="e.g., React, TypeScript, Remote, Senior (comma-separated)"
+        help="Enter skills, keywords, or tags for this specific application, separated by commas"
+      />
       
       <Textarea
         label="Notes"

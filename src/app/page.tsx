@@ -31,23 +31,27 @@ export default function Home() {
     return summary;
   };
 
-  // Get all unique tags from all companies
+  // Get all unique tags from all applications across all companies
   const allTags = useMemo(() => {
     const tags = new Set<string>();
     state.companies.forEach(company => {
-      company.tags?.forEach(tag => tags.add(tag));
+      company.applications.forEach(application => {
+        application.tags?.forEach(tag => tags.add(tag));
+      });
     });
     return Array.from(tags).sort();
   }, [state.companies]);
 
-  // Filter companies based on selected tags
+  // Filter companies based on selected tags (now searches across all applications)
   const filteredCompanies = useMemo(() => {
     if (selectedTags.length === 0) {
       return state.companies;
     }
     return state.companies.filter(company => 
-      selectedTags.some(selectedTag => 
-        company.tags?.includes(selectedTag)
+      company.applications.some(application =>
+        selectedTags.some(selectedTag => 
+          application.tags?.includes(selectedTag)
+        )
       )
     );
   }, [state.companies, selectedTags]);

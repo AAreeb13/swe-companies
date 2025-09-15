@@ -104,12 +104,38 @@ export const CompaniesProvider: React.FC<{ children: ReactNode }> = ({ children 
     if (savedData) {
       try {
         const parsedData = JSON.parse(savedData);
-        // Ensure backward compatibility by adding tags array if missing
-        const companiesWithTags = parsedData.map((company: Partial<Company>) => ({
-          ...company,
-          tags: company.tags || []
-        })) as Company[];
-        dispatch({ type: 'SET_COMPANIES', payload: companiesWithTags });
+        // Handle migration from company-level tags to application-level tags
+        const migratedCompanies = parsedData.map((company: Company & { tags?: string[] }) => {
+          // If this is old data with company-level tags, migrate them
+          if (company.tags && Array.isArray(company.tags)) {
+            const migratedApplications = company.applications.map((app: Application & { tags?: string[] }) => ({
+              ...app,
+              tags: app.tags || company.tags || [] // Use app tags if they exist, fallback to company tags, then empty array
+            }));
+            
+            // Remove company-level tags
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { tags: _, ...companyWithoutTags } = company;
+            
+            return {
+              ...companyWithoutTags,
+              applications: migratedApplications
+            };
+          }
+          
+          // For new data or already migrated data, ensure applications have tags array
+          const applicationsWithTags = company.applications.map((app: Application & { tags?: string[] }) => ({
+            ...app,
+            tags: app.tags || []
+          }));
+          
+          return {
+            ...company,
+            applications: applicationsWithTags
+          };
+        }) as Company[];
+        
+        dispatch({ type: 'SET_COMPANIES', payload: migratedCompanies });
       } catch (error) {
         console.error('Error parsing saved data:', error);
       }
@@ -126,8 +152,7 @@ export const CompaniesProvider: React.FC<{ children: ReactNode }> = ({ children 
       ...companyData,
       id: generateId(),
       createdAt: new Date().toISOString(),
-      applications: [],
-      tags: companyData.tags || []
+      applications: []
     };
     dispatch({ type: 'ADD_COMPANY', payload: newCompany });
   };
@@ -143,7 +168,8 @@ export const CompaniesProvider: React.FC<{ children: ReactNode }> = ({ children 
   const addApplication = (companyId: string, applicationData: Omit<Application, 'id'>) => {
     const newApplication: Application = {
       ...applicationData,
-      id: generateId()
+      id: generateId(),
+      tags: applicationData.tags || []
     };
     dispatch({ type: 'ADD_APPLICATION', payload: { companyId, application: newApplication } });
   };

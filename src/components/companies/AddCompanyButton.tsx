@@ -14,19 +14,12 @@ const CompanyForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     location: '',
     size: '',
     industry: '',
-    notes: '',
-    tagsInput: ''
+    notes: ''
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim()) return;
-    
-    // Parse tags from comma-separated input
-    const tags = formData.tagsInput
-      .split(',')
-      .map(tag => tag.trim())
-      .filter(tag => tag.length > 0);
     
     addCompany({
       name: formData.name.trim(),
@@ -34,8 +27,7 @@ const CompanyForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       location: formData.location.trim() || undefined,
       size: formData.size.trim() || undefined,
       industry: formData.industry.trim() || undefined,
-      notes: formData.notes.trim() || undefined,
-      tags
+      notes: formData.notes.trim() || undefined
     });
     
     onClose();
@@ -90,15 +82,6 @@ const CompanyForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         value={formData.industry}
         onChange={handleChange}
         placeholder="e.g., Fintech, Healthcare, E-commerce"
-      />
-      
-      <Input
-        label="Tags"
-        name="tagsInput"
-        value={formData.tagsInput}
-        onChange={handleChange}
-        placeholder="e.g., React, TypeScript, Remote, Startup (comma-separated)"
-        help="Enter skills or keywords that describe what this company is looking for, separated by commas"
       />
       
       <Textarea
