@@ -13,12 +13,13 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="fixed inset-0 bg-black bg-opacity-50" onClick={onClose} />
-      <div className="relative bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between p-4 border-b">
-          <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
+      <div className="relative rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto" style={{ backgroundColor: 'var(--card-bg)' }}>
+        <div className="flex items-center justify-between p-4 border-b" style={{ borderColor: 'var(--card-border)' }}>
+          <h2 className="text-xl font-semibold" style={{ color: 'var(--foreground)' }}>{title}</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 focus:outline-none"
+            className="hover:opacity-75 focus:outline-none"
+            style={{ color: 'var(--muted)' }}
           >
             <span className="sr-only">Close</span>
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

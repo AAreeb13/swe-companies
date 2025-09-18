@@ -44,21 +44,57 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, companyI
 
   const getStatusColor = (status: ApplicationStatus) => {
     switch (status) {
-      case 'applied': return 'bg-blue-100 text-blue-800';
-      case 'interviewing': return 'bg-yellow-100 text-yellow-800';
-      case 'offered': return 'bg-green-100 text-green-800';
-      case 'rejected': return 'bg-red-100 text-red-800';
-      case 'withdrawn': return 'bg-gray-100 text-gray-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'applied': 
+        return {
+          backgroundColor: 'var(--primary-muted)',
+          color: 'var(--primary)'
+        };
+      case 'interviewing': 
+        return {
+          backgroundColor: 'var(--warning-muted)',
+          color: 'var(--warning)'
+        };
+      case 'offered': 
+        return {
+          backgroundColor: 'var(--success-muted)',
+          color: 'var(--success)'
+        };
+      case 'rejected': 
+        return {
+          backgroundColor: 'var(--danger-muted)',
+          color: 'var(--danger)'
+        };
+      case 'withdrawn': 
+      default: 
+        return {
+          backgroundColor: 'var(--muted-bg)',
+          color: 'var(--muted)'
+        };
     }
   };
 
   const getPriorityColor = (priority: ApplicationPriority) => {
     switch (priority) {
-      case 'high': return 'bg-red-100 text-red-800';
-      case 'medium': return 'bg-yellow-100 text-yellow-800';
-      case 'low': return 'bg-green-100 text-green-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'high': 
+        return {
+          backgroundColor: 'var(--danger-muted)',
+          color: 'var(--danger)'
+        };
+      case 'medium': 
+        return {
+          backgroundColor: 'var(--warning-muted)',
+          color: 'var(--warning)'
+        };
+      case 'low': 
+        return {
+          backgroundColor: 'var(--success-muted)',
+          color: 'var(--success)'
+        };
+      default: 
+        return {
+          backgroundColor: 'var(--muted-bg)',
+          color: 'var(--muted)'
+        };
     }
   };
 
@@ -197,11 +233,11 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, companyI
   }
 
   return (
-    <div className="border border-gray-200 rounded-lg p-4 bg-white">
+    <div className="border rounded-lg p-4" style={{ borderColor: 'var(--card-border)', backgroundColor: 'var(--card-bg)' }}>
       <div className="flex justify-between items-start mb-3">
         <div>
-          <h5 className="font-semibold text-lg text-gray-900">{application.position}</h5>
-          <p className="text-sm text-gray-600">Applied: {formatDate(application.dateApplied)}</p>
+          <h5 className="font-semibold text-lg" style={{ color: 'var(--foreground)' }}>{application.position}</h5>
+          <p className="text-sm" style={{ color: 'var(--muted)' }}>Applied: {formatDate(application.dateApplied)}</p>
         </div>
         <div className="flex space-x-2">
           <Button size="sm" variant="secondary" onClick={() => setIsEditing(true)}>
@@ -214,10 +250,16 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, companyI
       </div>
       
       <div className="flex space-x-2 mb-3">
-        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(application.status)}`}>
+        <span 
+          className="px-2 py-1 rounded-full text-xs font-medium"
+          style={getStatusColor(application.status)}
+        >
           {application.status}
         </span>
-        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getPriorityColor(application.priority)}`}>
+        <span 
+          className="px-2 py-1 rounded-full text-xs font-medium"
+          style={getPriorityColor(application.priority)}
+        >
           {application.priority} priority
         </span>
       </div>
@@ -229,8 +271,13 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, companyI
             {application.tags.map((tag, index) => (
               <span
                 key={index}
-                className="px-2 py-1 text-xs font-medium bg-purple-100 text-purple-800 border border-purple-200"
-                style={{ borderRadius: '0.375rem' }}
+                className="px-2 py-1 text-xs font-medium border"
+                style={{ 
+                  borderRadius: '0.375rem',
+                  backgroundColor: 'var(--muted-bg)',
+                  color: 'var(--muted)',
+                  borderColor: 'var(--card-border)'
+                }}
               >
                 {tag}
               </span>
@@ -245,7 +292,8 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, companyI
             href={application.applicationUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:underline text-sm"
+            className="text-sm hover:underline"
+            style={{ color: 'var(--primary)' }}
           >
             🔗 View Application
           </a>
@@ -254,15 +302,15 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, companyI
       
       {application.notes && (
         <div className="mb-3">
-          <h6 className="font-medium text-sm text-gray-700 mb-1">Notes:</h6>
-          <p className="text-sm text-gray-600">{application.notes}</p>
+          <h6 className="font-medium text-sm mb-1" style={{ color: 'var(--foreground)' }}>Notes:</h6>
+          <p className="text-sm" style={{ color: 'var(--muted)' }}>{application.notes}</p>
         </div>
       )}
       
       {application.brainstorming && (
         <div className="mb-3">
           <div className="flex items-center justify-between mb-1">
-            <h6 className="font-medium text-sm text-gray-700">Brainstorming:</h6>
+            <h6 className="font-medium text-sm" style={{ color: 'var(--foreground)' }}>Brainstorming:</h6>
             <Button
               size="sm"
               variant="secondary"
@@ -272,8 +320,8 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, companyI
             </Button>
           </div>
           {showBrainstorming && (
-            <div className="bg-purple-50 p-3 rounded-md">
-              <p className="text-sm text-gray-700 whitespace-pre-wrap">{application.brainstorming}</p>
+            <div className="p-3 rounded-md" style={{ backgroundColor: 'var(--muted-bg)' }}>
+              <p className="text-sm whitespace-pre-wrap" style={{ color: 'var(--foreground)' }}>{application.brainstorming}</p>
             </div>
           )}
         </div>
@@ -282,7 +330,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, companyI
       {application.coverLetter && (
         <div className="mb-3">
           <div className="flex items-center justify-between mb-1">
-            <h6 className="font-medium text-sm text-gray-700">Cover Letter:</h6>
+            <h6 className="font-medium text-sm" style={{ color: 'var(--foreground)' }}>Cover Letter:</h6>
             <Button
               size="sm"
               variant="secondary"
@@ -292,8 +340,8 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application, companyI
             </Button>
           </div>
           {showCoverLetter && (
-            <div className="bg-green-50 p-3 rounded-md">
-              <p className="text-sm text-gray-700 whitespace-pre-wrap">{application.coverLetter}</p>
+            <div className="p-3 rounded-md" style={{ backgroundColor: 'var(--muted-bg)' }}>
+              <p className="text-sm whitespace-pre-wrap" style={{ color: 'var(--foreground)' }}>{application.coverLetter}</p>
             </div>
           )}
         </div>
