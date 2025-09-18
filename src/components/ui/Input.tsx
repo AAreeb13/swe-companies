@@ -10,21 +10,24 @@ const Input: React.FC<InputProps> = ({ label, error, help, className = '', ...pr
   return (
     <div className="mb-4">
       {label && (
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-sm font-medium mb-1" style={{ color: 'var(--foreground)' }}>
           {label}
         </label>
       )}
       <input
-        className={`w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-          error ? 'border-red-500' : ''
-        } ${className}`}
+        className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:border-transparent ${className}`}
+        style={{
+          borderColor: error ? 'var(--danger)' : 'var(--card-border)',
+          backgroundColor: 'var(--card-bg)',
+          color: 'var(--foreground)'
+        }}
         {...props}
       />
       {help && !error && (
-        <p className="mt-1 text-xs text-gray-500">{help}</p>
+        <p className="mt-1 text-xs" style={{ color: 'var(--muted)' }}>{help}</p>
       )}
       {error && (
-        <p className="mt-1 text-sm text-red-600">{error}</p>
+        <p className="mt-1 text-sm" style={{ color: 'var(--danger)' }}>{error}</p>
       )}
     </div>
   );
@@ -39,18 +42,21 @@ export const Textarea: React.FC<TextareaProps> = ({ label, error, className = ''
   return (
     <div className="mb-4">
       {label && (
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-sm font-medium mb-1" style={{ color: 'var(--foreground)' }}>
           {label}
         </label>
       )}
       <textarea
-        className={`w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-          error ? 'border-red-500' : ''
-        } ${className}`}
+        className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:border-transparent ${className}`}
+        style={{
+          borderColor: error ? 'var(--danger)' : 'var(--card-border)',
+          backgroundColor: 'var(--card-bg)',
+          color: 'var(--foreground)'
+        }}
         {...props}
       />
       {error && (
-        <p className="mt-1 text-sm text-red-600">{error}</p>
+        <p className="mt-1 text-sm" style={{ color: 'var(--danger)' }}>{error}</p>
       )}
     </div>
   );
@@ -66,14 +72,17 @@ export const Select: React.FC<SelectProps> = ({ label, error, options, className
   return (
     <div className="mb-4">
       {label && (
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-sm font-medium mb-1" style={{ color: 'var(--foreground)' }}>
           {label}
         </label>
       )}
       <select
-        className={`w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-          error ? 'border-red-500' : ''
-        } ${className}`}
+        className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:border-transparent ${className}`}
+        style={{
+          borderColor: error ? 'var(--danger)' : 'var(--card-border)',
+          backgroundColor: 'var(--card-bg)',
+          color: 'var(--foreground)'
+        }}
         {...props}
       >
         {options.map((option) => (
@@ -83,7 +92,7 @@ export const Select: React.FC<SelectProps> = ({ label, error, options, className
         ))}
       </select>
       {error && (
-        <p className="mt-1 text-sm text-red-600">{error}</p>
+        <p className="mt-1 text-sm" style={{ color: 'var(--danger)' }}>{error}</p>
       )}
     </div>
   );

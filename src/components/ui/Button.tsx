@@ -14,10 +14,34 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   const baseClasses = 'font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
   
-  const variantClasses = {
-    primary: 'bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-500',
-    secondary: 'bg-gray-600 hover:bg-gray-700 text-white focus:ring-gray-500',
-    danger: 'bg-red-600 hover:bg-red-700 text-white focus:ring-red-500'
+  const getVariantStyles = (variant: string) => {
+    switch (variant) {
+      case 'primary':
+        return {
+          backgroundColor: 'var(--primary)',
+          color: 'white',
+          borderColor: 'var(--primary)'
+        };
+      case 'secondary':
+        return {
+          backgroundColor: 'var(--muted-bg)',
+          color: 'var(--muted)',
+          borderColor: 'var(--card-border)',
+          border: '1px solid'
+        };
+      case 'danger':
+        return {
+          backgroundColor: 'var(--danger)',
+          color: 'white',
+          borderColor: 'var(--danger)'
+        };
+      default:
+        return {
+          backgroundColor: 'var(--primary)',
+          color: 'white',
+          borderColor: 'var(--primary)'
+        };
+    }
   };
   
   const sizeClasses = {
@@ -26,9 +50,29 @@ const Button: React.FC<ButtonProps> = ({
     lg: 'px-6 py-3 text-base'
   };
   
+  const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (variant === 'primary') {
+      e.currentTarget.style.backgroundColor = 'var(--primary-hover)';
+    } else if (variant === 'secondary') {
+      e.currentTarget.style.backgroundColor = 'var(--card-border)';
+    } else if (variant === 'danger') {
+      e.currentTarget.style.backgroundColor = 'var(--danger)';
+      e.currentTarget.style.opacity = '0.9';
+    }
+  };
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const styles = getVariantStyles(variant);
+    e.currentTarget.style.backgroundColor = styles.backgroundColor;
+    e.currentTarget.style.opacity = '1';
+  };
+  
   return (
     <button
-      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
+      className={`${baseClasses} ${sizeClasses[size]} ${className}`}
+      style={getVariantStyles(variant)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       {...props}
     >
       {children}

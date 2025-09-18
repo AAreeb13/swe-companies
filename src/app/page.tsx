@@ -72,13 +72,13 @@ export default function Home() {
   const totalApplications = getTotalApplications();
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--muted-bg)' }}>
+      <header style={{ backgroundColor: 'var(--card-bg)', boxShadow: 'var(--shadow)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">SWE Companies Tracker</h1>
-              <p className="text-gray-600">Track your software engineering job applications</p>
+              <h1 className="text-3xl font-bold" style={{ color: 'var(--foreground)' }}>SWE Companies Tracker</h1>
+              <p style={{ color: 'var(--muted)' }}>Track your software engineering job applications</p>
             </div>
             <AddCompanyButton />
           </div>
@@ -88,58 +88,78 @@ export default function Home() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Summary Stats */}
         <div className="grid grid-cols-1 md:grid-cols-6 gap-4 mb-8">
-          <div className="bg-white p-4 rounded-lg shadow text-center">
-            <div className="text-2xl font-bold text-gray-900">{state.companies.length}</div>
-            <div className="text-sm text-gray-600">Companies</div>
+          <div className="p-4 rounded-lg text-center" style={{ backgroundColor: 'var(--card-bg)', boxShadow: 'var(--shadow)' }}>
+            <div className="text-2xl font-bold" style={{ color: 'var(--foreground)' }}>{state.companies.length}</div>
+            <div className="text-sm" style={{ color: 'var(--muted)' }}>Companies</div>
           </div>
-          <div className="bg-white p-4 rounded-lg shadow text-center">
-            <div className="text-2xl font-bold text-gray-900">{totalApplications}</div>
-            <div className="text-sm text-gray-600">Total Applications</div>
+          <div className="p-4 rounded-lg text-center" style={{ backgroundColor: 'var(--card-bg)', boxShadow: 'var(--shadow)' }}>
+            <div className="text-2xl font-bold" style={{ color: 'var(--foreground)' }}>{totalApplications}</div>
+            <div className="text-sm" style={{ color: 'var(--muted)' }}>Total Applications</div>
           </div>
-          <div className="bg-white p-4 rounded-lg shadow text-center">
-            <div className="text-2xl font-bold text-blue-600">{statusSummary.applied}</div>
-            <div className="text-sm text-gray-600">Applied</div>
+          <div className="p-4 rounded-lg text-center" style={{ backgroundColor: 'var(--card-bg)', boxShadow: 'var(--shadow)' }}>
+            <div className="text-2xl font-bold" style={{ color: 'var(--primary)' }}>{statusSummary.applied}</div>
+            <div className="text-sm" style={{ color: 'var(--muted)' }}>Applied</div>
           </div>
-          <div className="bg-white p-4 rounded-lg shadow text-center">
-            <div className="text-2xl font-bold text-yellow-600">{statusSummary.interviewing}</div>
-            <div className="text-sm text-gray-600">Interviewing</div>
+          <div className="p-4 rounded-lg text-center" style={{ backgroundColor: 'var(--card-bg)', boxShadow: 'var(--shadow)' }}>
+            <div className="text-2xl font-bold" style={{ color: 'var(--warning)' }}>{statusSummary.interviewing}</div>
+            <div className="text-sm" style={{ color: 'var(--muted)' }}>Interviewing</div>
           </div>
-          <div className="bg-white p-4 rounded-lg shadow text-center">
-            <div className="text-2xl font-bold text-green-600">{statusSummary.offered}</div>
-            <div className="text-sm text-gray-600">Offered</div>
+          <div className="p-4 rounded-lg text-center" style={{ backgroundColor: 'var(--card-bg)', boxShadow: 'var(--shadow)' }}>
+            <div className="text-2xl font-bold" style={{ color: 'var(--success)' }}>{statusSummary.offered}</div>
+            <div className="text-sm" style={{ color: 'var(--muted)' }}>Offered</div>
           </div>
-          <div className="bg-white p-4 rounded-lg shadow text-center">
-            <div className="text-2xl font-bold text-red-600">{statusSummary.rejected}</div>
-            <div className="text-sm text-gray-600">Rejected</div>
+          <div className="p-4 rounded-lg text-center" style={{ backgroundColor: 'var(--card-bg)', boxShadow: 'var(--shadow)' }}>
+            <div className="text-2xl font-bold" style={{ color: 'var(--danger)' }}>{statusSummary.rejected}</div>
+            <div className="text-sm" style={{ color: 'var(--muted)' }}>Rejected</div>
           </div>
         </div>
 
         {/* Tag Filters */}
         {allTags.length > 0 && (
-          <div className="mb-8 bg-white p-4 shadow border border-gray-200">
+          <div className="mb-8 p-4 border" style={{ backgroundColor: 'var(--card-bg)', boxShadow: 'var(--shadow)', borderColor: 'var(--card-border)' }}>
             <div className="flex flex-wrap items-center gap-2 mb-2">
-              <h3 className="font-medium text-gray-900">Filter by tags:</h3>
+              <h3 className="font-medium" style={{ color: 'var(--foreground)' }}>Filter by tags:</h3>
               {allTags.map(tag => (
                 <button
                   key={tag}
                   onClick={() => handleTagToggle(tag)}
-                  className={`px-3 py-1 text-sm font-medium border transition-colors ${
-                    selectedTags.includes(tag)
-                      ? 'bg-blue-100 text-blue-800 border-blue-300'
-                      : 'bg-gray-50 text-gray-700 border-gray-300 hover:bg-gray-100'
-                  }`}
-                  style={{ borderRadius: '0.375rem' }}
+                  className={`px-3 py-1 text-sm font-medium border transition-colors`}
+                  style={{ 
+                    borderRadius: '0.375rem',
+                    ...(selectedTags.includes(tag)
+                      ? { 
+                          backgroundColor: 'var(--primary-muted)', 
+                          color: 'var(--primary)', 
+                          borderColor: 'var(--primary)' 
+                        }
+                      : { 
+                          backgroundColor: 'var(--muted-bg)', 
+                          color: 'var(--muted)', 
+                          borderColor: 'var(--card-border)' 
+                        })
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!selectedTags.includes(tag)) {
+                      e.currentTarget.style.backgroundColor = 'var(--card-border)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!selectedTags.includes(tag)) {
+                      e.currentTarget.style.backgroundColor = 'var(--muted-bg)';
+                    }
+                  }}
                 >
                   {tag}
                 </button>
               ))}
             </div>
             {selectedTags.length > 0 && (
-              <div className="flex items-center gap-2 text-sm text-gray-600">
+              <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--muted)' }}>
                 <span>Active filters: {selectedTags.join(', ')}</span>
                 <button
                   onClick={clearFilters}
-                  className="text-blue-600 hover:text-blue-800 underline"
+                  className="underline hover:no-underline"
+                  style={{ color: 'var(--primary)' }}
                 >
                   Clear all
                 </button>
@@ -151,9 +171,9 @@ export default function Home() {
         {/* Companies Grid */}
         {state.companies.length === 0 ? (
           <div className="text-center py-12">
-            <div className="bg-white rounded-lg shadow-md p-8">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Welcome to your Job Application Tracker!</h2>
-              <p className="text-gray-600 mb-6">
+            <div className="rounded-lg p-8" style={{ backgroundColor: 'var(--card-bg)', boxShadow: 'var(--shadow)' }}>
+              <h2 className="text-xl font-semibold mb-4" style={{ color: 'var(--foreground)' }}>Welcome to your Job Application Tracker!</h2>
+              <p className="mb-6" style={{ color: 'var(--muted)' }}>
                 Start by adding your first company to track your software engineering job applications.
               </p>
               <AddCompanyButton />
@@ -161,15 +181,25 @@ export default function Home() {
           </div>
         ) : filteredCompanies.length === 0 ? (
           <div className="text-center py-12">
-            <div className="bg-white shadow-md p-8 border border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">No companies match your filters</h2>
-              <p className="text-gray-600 mb-6">
+            <div className="p-8 border" style={{ backgroundColor: 'var(--card-bg)', boxShadow: 'var(--shadow)', borderColor: 'var(--card-border)' }}>
+              <h2 className="text-xl font-semibold mb-4" style={{ color: 'var(--foreground)' }}>No companies match your filters</h2>
+              <p className="mb-6" style={{ color: 'var(--muted)' }}>
                 Try adjusting your tag filters or add more companies.
               </p>
               <button
                 onClick={clearFilters}
-                className="mr-4 px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 transition-colors"
-                style={{ borderRadius: '0.25rem' }}
+                className="mr-4 px-4 py-2 transition-colors"
+                style={{ 
+                  borderRadius: '0.25rem',
+                  backgroundColor: 'var(--primary)',
+                  color: 'white'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--primary-hover)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--primary)';
+                }}
               >
                 Clear Filters
               </button>

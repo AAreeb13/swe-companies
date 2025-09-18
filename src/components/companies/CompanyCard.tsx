@@ -41,18 +41,18 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
   const totalApplications = company.applications.length;
 
   return (
-    <div className="bg-white rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow">
+    <div className="rounded-lg border transition-shadow hover:shadow-lg" style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)', boxShadow: 'var(--shadow)' }}>
       <div className="p-6">
         <div className="flex justify-between items-start mb-4">
           <div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">{company.name}</h3>
-            <div className="text-sm text-gray-600 space-y-1">
+            <h3 className="text-xl font-semibold mb-2" style={{ color: 'var(--foreground)' }}>{company.name}</h3>
+            <div className="text-sm space-y-1" style={{ color: 'var(--muted)' }}>
               {company.location && <p>📍 {company.location}</p>}
               {company.industry && <p>🏢 {company.industry}</p>}
               {company.size && <p>👥 {company.size}</p>}
               {company.website && (
                 <p>
-                  🌐 <a href={company.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  🌐 <a href={company.website} target="_blank" rel="noopener noreferrer" className="hover:underline" style={{ color: 'var(--primary)' }}>
                     {company.website}
                   </a>
                 </p>
@@ -78,38 +78,38 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
         </div>
 
         {company.notes && (
-          <div className="mb-4 p-3 bg-gray-50 rounded-md">
-            <p className="text-sm text-gray-700">{company.notes}</p>
+          <div className="mb-4 p-3 rounded-md" style={{ backgroundColor: 'var(--muted-bg)' }}>
+            <p className="text-sm" style={{ color: 'var(--foreground)' }}>{company.notes}</p>
           </div>
         )}
 
         <div className="mb-4">
           <div className="flex items-center justify-between mb-2">
-            <h4 className="font-medium text-gray-900">Applications ({totalApplications})</h4>
+            <h4 className="font-medium" style={{ color: 'var(--foreground)' }}>Applications ({totalApplications})</h4>
             <AddApplicationButton companyId={company.id} />
           </div>
           
           {totalApplications > 0 && (
             <div className="grid grid-cols-5 gap-2 text-xs mb-3">
-              <div className="text-center p-2 bg-blue-50 rounded">
-                <div className="font-semibold text-blue-800">{statusCounts.applied}</div>
-                <div className="text-blue-600">Applied</div>
+              <div className="text-center p-2 rounded" style={{ backgroundColor: 'var(--primary-muted)' }}>
+                <div className="font-semibold" style={{ color: 'var(--primary)' }}>{statusCounts.applied}</div>
+                <div style={{ color: 'var(--primary)' }}>Applied</div>
               </div>
-              <div className="text-center p-2 bg-yellow-50 rounded">
-                <div className="font-semibold text-yellow-800">{statusCounts.interviewing}</div>
-                <div className="text-yellow-600">Interviewing</div>
+              <div className="text-center p-2 rounded" style={{ backgroundColor: 'var(--warning-muted)' }}>
+                <div className="font-semibold" style={{ color: 'var(--warning)' }}>{statusCounts.interviewing}</div>
+                <div style={{ color: 'var(--warning)' }}>Interviewing</div>
               </div>
-              <div className="text-center p-2 bg-green-50 rounded">
-                <div className="font-semibold text-green-800">{statusCounts.offered}</div>
-                <div className="text-green-600">Offered</div>
+              <div className="text-center p-2 rounded" style={{ backgroundColor: 'var(--success-muted)' }}>
+                <div className="font-semibold" style={{ color: 'var(--success)' }}>{statusCounts.offered}</div>
+                <div style={{ color: 'var(--success)' }}>Offered</div>
               </div>
-              <div className="text-center p-2 bg-red-50 rounded">
-                <div className="font-semibold text-red-800">{statusCounts.rejected}</div>
-                <div className="text-red-600">Rejected</div>
+              <div className="text-center p-2 rounded" style={{ backgroundColor: 'var(--danger-muted)' }}>
+                <div className="font-semibold" style={{ color: 'var(--danger)' }}>{statusCounts.rejected}</div>
+                <div style={{ color: 'var(--danger)' }}>Rejected</div>
               </div>
-              <div className="text-center p-2 bg-gray-50 rounded">
-                <div className="font-semibold text-gray-800">{statusCounts.withdrawn}</div>
-                <div className="text-gray-600">Withdrawn</div>
+              <div className="text-center p-2 rounded" style={{ backgroundColor: 'var(--muted-bg)' }}>
+                <div className="font-semibold" style={{ color: 'var(--muted)' }}>{statusCounts.withdrawn}</div>
+                <div style={{ color: 'var(--muted)' }}>Withdrawn</div>
               </div>
             </div>
           )}
@@ -118,7 +118,7 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
         {isExpanded && (
           <div className="space-y-3">
             {company.applications.length === 0 ? (
-              <p className="text-gray-500 text-center py-4">No applications yet. Add your first application!</p>
+              <p className="text-center py-4" style={{ color: 'var(--muted)' }}>No applications yet. Add your first application!</p>
             ) : (
               company.applications.map(application => (
                 <ApplicationCard
