@@ -3,6 +3,7 @@
 import { useCompanies } from '@/context/CompaniesContext';
 import AddCompanyButton from '@/components/companies/AddCompanyButton';
 import CompanyCard from '@/components/companies/CompanyCard';
+import CompareApplicationsButton from '@/components/applications/CompareApplicationsButton';
 import { useState, useMemo } from 'react';
 
 export default function Home() {
@@ -80,7 +81,10 @@ export default function Home() {
               <h1 className="text-3xl font-bold" style={{ color: 'var(--foreground)' }}>SWE Companies Tracker</h1>
               <p style={{ color: 'var(--muted)' }}>Track your software engineering job applications</p>
             </div>
-            <AddCompanyButton />
+            <div className="flex space-x-3">
+              <CompareApplicationsButton />
+              <AddCompanyButton />
+            </div>
           </div>
         </div>
       </header>
